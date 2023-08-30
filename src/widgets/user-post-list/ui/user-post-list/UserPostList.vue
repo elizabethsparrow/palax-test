@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useUserStore } from '@/entities/user'
+import { editPost, type IPost } from '@/entities/post'
 import { UserPostCard } from '@/widgets/user-post-list'
 import { BaseButton, EnumButtonSizes, EnumButtonStyles } from '@/shared/ui-kit/base-button'
 import { ConfirmPopup } from '@/features/confirm-popup'
 import { EditPostPopup } from '@/features/edit-post-popup'
 import { ref, toRefs } from 'vue'
-import type { IPost } from '@/entities/post'
 
 const userStore = useUserStore(),
   { getAllUsers } = userStore,
@@ -25,11 +25,18 @@ const onClickEditButton = async (post: IPost) => {
   refEditPostPopup.value.open(post)
 }
 
-const onClickSaveButton = () => {
-  const result = refEditPostPopup.value.confirm()
-
-  if (result) {
-    activateConfirm('Success!', 'Post successfully edited')
+const onClickSaveButton = async () => {
+  try {
+    const result: IPost = refEditPostPopup.value.getFormData()
+    if (result) {
+      await editPost(result)
+      refEditPostPopup.value.confirm()
+      activateConfirm('Success!', 'Post successfully edited')
+      return
+    }
+    throw { message: 'Sorry:(' }
+  } catch (error: any) {
+    activateConfirm('Error!', error.message)
   }
 }
 

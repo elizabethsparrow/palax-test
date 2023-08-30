@@ -13,18 +13,18 @@ const open = (newPostData: IPostCreate | IPost): void => {
   refBasePopup.value.open()
 }
 
-const confirm = (): IPostCreate | IPost | null => {
-  const formData = refPostForm.value.getFormData()
-  if (!formData) return null
-  refBasePopup.value.confirm()
-  return formData
+const getFormData = () => {
+  return { ...refPostForm.value.getFormData(), id: postData.value.id }
 }
 
-const close = () => {
-  refBasePopup.value.close()
-}
+const close = () => refBasePopup.value.close()
 
-defineExpose({ open, confirm, close })
+defineExpose({
+  open,
+  confirm: () => refBasePopup.value.confirm(),
+  close,
+  getFormData
+})
 </script>
 
 <template>
