@@ -1,0 +1,24 @@
+.confirm-popup {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__text-message {
+    line-height: 1.5;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  &__buttons-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+}

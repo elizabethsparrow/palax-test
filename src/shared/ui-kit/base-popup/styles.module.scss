@@ -1,0 +1,35 @@
+.base-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  min-width: 100vw;
+  min-height: 100vh;
+
+  &__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__card {
+    max-width: 80vw;
+    min-width: 300px;
+    padding: 12px;
+    border-radius: 8px;
+    background: $white;
+  }
+
+  &__background {
+    top: 0;
+    display: block;
+    position: absolute;
+    z-index: -1;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.532);
+  }
+}

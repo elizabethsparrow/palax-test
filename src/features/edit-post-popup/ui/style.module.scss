@@ -1,0 +1,18 @@
+.edit-post-popup {
+  
+  &__title {
+    text-align: center;
+  }
+
+  &__post-form {
+    min-width: 500px;
+    margin-top: 18px;
+  }
+
+  &__buttons-block {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+  }
+}
