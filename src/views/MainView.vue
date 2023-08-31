@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { UserPostList } from '@/widgets/user-post-list'
-import { CreatePostComponent } from '@/widgets/create-post'
+import { HeaderComponent } from '@/widgets/header'
 </script>
 
 <template>
   <div class="main-page">
-    <create-post-component />
+    <header-component />
     <user-post-list class="user-post-list" />
   </div>
 </template>

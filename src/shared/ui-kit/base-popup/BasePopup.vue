@@ -1,18 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+interface currentStatus {
+  resolve: Function
+  reject: Function
+}
+
 const isOpen = ref<Boolean>(false)
-let currentStatus = ref({})
+let currentStatus = ref<currentStatus>({
+  resolve: () => {},
+  reject: () => {}
+})
 
 const open = () => {
   const popupPromise = new Promise((resolve, reject) => {
     currentStatus.value.resolve = resolve
     currentStatus.value.reject = reject
   })
-
   isOpen.value = true
   return popupPromise
 }
+
 const confirm = () => {
   isOpen.value = false
 

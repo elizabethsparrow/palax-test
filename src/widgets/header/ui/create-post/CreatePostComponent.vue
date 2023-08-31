@@ -7,7 +7,7 @@ import { ref } from 'vue'
 
 const refEditPostPopup = ref(),
   refConfirmPopup = ref(),
-  refCreateButton = ref(null)
+  refCreateButton = ref({})
 
 const { createNewPost } = usePostStore()
 

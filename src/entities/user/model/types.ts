@@ -2,25 +2,26 @@ import type { IPost } from '@/entities/post'
 
 export interface IUser {
   id: Number
-  name: String
-  username?: String
+  name?: String | null
+  username?: String | null
   address?: {
-    street?: String
-    suite?: String
-    city?: String
-    zipcode?: String
+    street?: String | null
+    suite?: String | null
+    city?: String | null
+    zipcode?: String | null
     geo?: {
-      lat?: String
-      lng?: String
+      lat?: String | null
+      lng?: String | null
     }
   }
-  email?: String
-  phone?: String
-  website?: String
+  email?: String | null
+  phone?: String | null
+  website?: String | null
   company?: {
-    name?: String
-    catchPhrase?: String
-    bs?: String
+    name?: String | null
+    catchPhrase?: String | null
+    bs?: String | null
   }
-  posts: IPost[]
 }
+
+export interface IUserCreate extends Omit<IUser, 'id'> {}

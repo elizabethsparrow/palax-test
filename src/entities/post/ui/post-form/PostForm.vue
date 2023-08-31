@@ -65,25 +65,38 @@ defineExpose({ getFormData })
 <template>
   <div class="post-form">
     <div class="post-form__container">
-      <Dropdown
-        class="post-form__input"
-        :class="{ 'p-invalid': v$.userId.$invalid && v$.userId.$dirty }"
-        v-model="formData.userId"
-        :options="users"
-        :optionValue="(val) => val.id"
-        optionLabel="name"
-        placeholder="Select a User"
-      />
-      <input-text
-        class="post-form__input post-form__input-title"
-        :class="{ 'p-invalid': v$.title.$invalid && v$.title.$dirty }"
-        v-model="formData.title"
-      />
-      <input-text
-        class="post-form__input post-form__input-body"
-        :class="{ 'p-invalid': v$.body.$invalid && v$.body.$dirty }"
-        v-model="formData.body"
-      />
+      <div class="post-form__input-block">
+        <label for="user">User</label>
+        <Dropdown
+          id="user"
+          class="post-form__input post-form__dropdown"
+          :class="{ 'p-invalid': v$.userId.$invalid && v$.userId.$dirty }"
+          v-model="formData.userId"
+          :options="users"
+          :optionValue="(val) => val.id"
+          optionLabel="name"
+          placeholder="Select a User"
+        />
+      </div>
+
+      <div class="post-form__input-block">
+        <label for="title">Title</label>
+        <input-text
+          id="title"
+          class="post-form__input post-form__input-title"
+          :class="{ 'p-invalid': v$.title.$invalid && v$.title.$dirty }"
+          v-model="formData.title"
+        />
+      </div>
+      <div class="post-form__input-block">
+        <label for="body">Body</label>
+        <input-text
+          id="body"
+          class="post-form__input post-form__input-body"
+          :class="{ 'p-invalid': v$.body.$invalid && v$.body.$dirty }"
+          v-model="formData.body"
+        />
+      </div>
       <p class="post-form__error-message" v-if="error.status">{{ error.message }}</p>
     </div>
   </div>
