@@ -1,32 +1,93 @@
 import { useUserStore } from '@/entities/user'
 import { defineStore } from 'pinia'
-import { toRefs } from 'vue'
-import { getPostsByUser as requestGetPostsByUser, type IPost } from '@/entities/post'
+import { ref, toRefs, watch } from 'vue'
+import {
+  getPostsByUser as requestGetPostsByUser,
+  editPost as requestEditPost,
+  deletePost as requestDeletePost,
+  createPost,
+  type IPost,
+  type IPostCreate
+} from '@/entities/post'
 
 export const usePostStore = defineStore('postStore', () => {
-  const userStore = useUserStore(),
-    { getUserById } = userStore,
-    { users } = toRefs(userStore)
+  const posts = ref<IPost[]>([])
 
   const getPostsByUser = async (userId: Number) => {
+    if (getPostsByUserId(userId).length > 0) {
+      return
+    }
     const response = await requestGetPostsByUser(userId)
-    setPostsToUserState(userId, response)
+    setPostsToState(response)
   }
 
-  const setPostsToUserState = (userId: Number, posts: IPost[]) => {
-    const user = getUserById(userId)
-    if (user && !user.posts) user.posts = []
-    if (user?.posts) {
-      posts.forEach((post) => {
-        let isPostExist = getIsPostExist(user.posts, post.id)
-        if (!isPostExist) user.posts.push(post)
-      })
+  const getPostById = (postId?: Number) => {
+    if (postId) {
+      return posts.value.find((post) => post.id == postId)
+    }
+    return null
+  }
+
+  const setPostsToState = (newPosts: IPost[]): void => {
+    newPosts.forEach((post) => {
+      let isPostExist = getIsPostExist(post.id)
+      if (!isPostExist) posts.value.push(post)
+    })
+  }
+  const updatePost = (postData: IPost) => {
+    console.log(postData)
+
+    let post: IPost | null | undefined = getPostById(postData.id)
+    let postObjectKeys = Object.getOwnPropertyNames(post)
+    postObjectKeys.forEach((key) => {
+      if (post) post[key] = postData[key]
+    })
+    console.log(post)
+  }
+
+  const getIsPostExist = (postId: Number): Boolean => {
+    return posts.value.map((el) => el.id).includes(postId)
+  }
+
+  const createNewPost = async (postData: IPostCreate): Promise<void> => {
+    const result: IPost = await createPost(postData)
+    if (result) setPostsToState([result])
+  }
+
+  const editPost = async (postData: IPost): Promise<void> => {
+    try {
+      const result = await requestEditPost(postData)
+      if (result) updatePost(result)
+    } catch (error) {
+      throw error
     }
   }
 
-  const getIsPostExist = (posts: IPost[], postId: Number) => {
-    return posts?.map((el) => el.id).includes(postId)
+  const getPostsByUserId = (userId: Number) => {
+    return [...posts.value].filter((el) => el.userId == userId)
   }
 
-  return { getPostsByUser, setPostsToUserState }
+  const deletePost = async (postId: Number) => {
+    await requestDeletePost(postId)
+    posts.value = [...posts.value].filter((post) => post.id != postId)
+  }
+
+  watch(
+    () => posts.value,
+    () => {
+      if (posts.value.length <= 0) setPostsToState(JSON.parse(localStorage.posts))
+      localStorage.posts = JSON.stringify(posts.value)
+    },
+    { immediate: true, deep: true }
+  )
+
+  return {
+    posts,
+    getPostsByUser,
+    setPostsToState,
+    createNewPost,
+    getPostsByUserId,
+    editPost,
+    deletePost
+  }
 })

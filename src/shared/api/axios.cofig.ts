@@ -7,6 +7,15 @@ export const useAxios = axios.create({
   }
 })
 
-useAxios.interceptors.response.use((res) => {
-  return res.data
-})
+useAxios.interceptors.response.use(
+  (res) => {
+    return res.data
+  },
+  (error) => {
+    if (error?.response?.status == 500) {
+      throw { message: 'Server Error  Sorry:(' }
+    }
+
+    throw error
+  }
+)

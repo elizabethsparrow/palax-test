@@ -9,7 +9,9 @@ defineProps<{ post: IPost }>()
     <div class="post-card__container">
       <p class="post-card__title">{{ post.title }}</p>
       <p class="post-card__body">{{ post.body }}</p>
-      <slot name="bottom-block" />
+      <div class="post-card__buttons-block">
+        <slot name="bottom-block" />
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +27,12 @@ defineProps<{ post: IPost }>()
   }
   &__title {
     font-weight: 700;
+  }
+
+  &__buttons-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 }
 </style>

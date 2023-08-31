@@ -8,13 +8,14 @@ const refBasePopup = ref(),
   refPostForm = ref(),
   postData = ref<IPostCreate | IPost>({})
 
-const open = (newPostData: IPostCreate | IPost): void => {
-  postData.value = newPostData
+const open = (newPostData?: IPost): void => {
+  if (newPostData) postData.value = newPostData
   refBasePopup.value.open()
 }
 
 const getFormData = () => {
-  return { ...refPostForm.value.getFormData(), id: postData.value.id }
+  const formData = refPostForm.value.getFormData()
+  if (formData) return { ...postData.value, ...refPostForm.value.getFormData() }
 }
 
 const close = () => refBasePopup.value.close()
