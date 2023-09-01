@@ -75,10 +75,9 @@ export const usePostStore = defineStore('postStore', () => {
   watch(
     () => posts.value,
     () => {
-      const localStoragePosts = localStorage.posts ? JSON.parse(localStorage.posts) : null
-
-      if (posts.value.length <= 0 && localStoragePosts) setPostsToState(localStoragePosts)
       localStorage.posts = JSON.stringify(posts.value)
+      const localStoragePosts = localStorage.posts ? JSON.parse(localStorage.posts) : null
+      if (posts.value.length <= 0 && localStoragePosts) setPostsToState(localStoragePosts)
     },
     { immediate: true, deep: true }
   )
