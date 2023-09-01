@@ -162,7 +162,7 @@ onLoad()
             :button-size="EnumButtonSizes.small"
             @click="onClickPostEditButton(post)"
           >
-            <trash-icon width="15px" height="15px" />
+            <edit-icon width="15px" height="15px" />
           </base-button>
           <base-button
             :ref="`refDeleteButton${post.id}`"
