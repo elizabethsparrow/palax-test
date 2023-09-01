@@ -13,10 +13,14 @@ const open = (newUserData?: IUser) => {
   refBasePopup.value?.open()
 }
 
+const getFormData = (): IUser => {
+  return { ...refUserForm.value?.getFormData(), id: userData.value?.id }
+}
+
 defineExpose({
   open,
   confirm: () => refBasePopup.value.confirm(),
-  getFormData: () => refUserForm.value?.getFormData()
+  getFormData
 })
 </script>
 
