@@ -98,7 +98,7 @@ defineExpose({ getFormData })
     <div class="user-form__input-block form__input-block">
       <label class="user-form__input-label form__input-label" for="phone">Phone</label>
       <input-mask
-        mask="(999) 999-9999? 99999"
+        mask="9999999999?99999"
         class="user-form__input form__input"
         id="phone"
         v-model="formData.phone"
