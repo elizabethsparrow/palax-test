@@ -67,6 +67,7 @@ watch(
           <slot name="post-buttons-block" :post="post" />
         </template>
       </post-card>
+      <p v-if="posts.length <= 0">Posts not found</p>
     </div>
   </div>
 </template>

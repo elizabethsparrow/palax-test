@@ -5,13 +5,21 @@ import { HeaderComponent } from '@/widgets/header'
 
 <template>
   <div class="main-page">
-    <header-component />
-    <user-post-list class="user-post-list" />
+    <header-component class="main-page__header" />
+    <user-post-list class="main-page__user-post-list" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.user-post-list {
-  padding: 6px;
+.main-page {
+  &__user-post-list {
+    padding: 6px;
+  }
+
+  &__header {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+  }
 }
 </style>
