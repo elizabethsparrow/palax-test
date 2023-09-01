@@ -188,4 +188,3 @@ onLoad()
   }
 }
 </style>
-@/features/user-post-card @/widgets/user-post-list/ui/user-post-card

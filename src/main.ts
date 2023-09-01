@@ -4,7 +4,7 @@ import PrimeVue from 'primevue/config'
 import 'primevue/resources/themes/lara-light-blue/theme.css'
 
 import App from './App.vue'
-import router from './app/router'
+import router from './shared/router'
 
 const app = createApp(App)
 
