@@ -36,14 +36,11 @@ export const usePostStore = defineStore('postStore', () => {
     })
   }
   const updatePost = (postData: IPost) => {
-    console.log(postData)
-
     let post: IPost | null | undefined = getPostById(postData.id)
     let postObjectKeys = Object.getOwnPropertyNames(post)
     postObjectKeys.forEach((key) => {
       if (post) post[key] = postData[key]
     })
-    console.log(post)
   }
 
   const getIsPostExist = (postId: Number): Boolean => {

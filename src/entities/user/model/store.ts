@@ -41,11 +41,8 @@ export const useUserStore = defineStore('userStore', () => {
 
   const getAllUsers = async (): Promise<void> => {
     setUsersFromLocalStorage()
-    console.log(users.value.length)
-
     if (users.value.length <= 0) {
       const response = await requestGetAllUsers()
-      console.log(response)
       setUsers(response)
     }
   }
@@ -69,8 +66,6 @@ export const useUserStore = defineStore('userStore', () => {
   const setUsersFromLocalStorage = () => {
     const localStorageUsers = localStorage.users ? JSON.parse(localStorage.users) : null
     if (users.value.length <= 0 && localStorageUsers) setUsers(localStorageUsers)
-    console.log(localStorage.users)
-    console.log(users.value)
   }
 
   watch(
