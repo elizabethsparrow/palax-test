@@ -7,6 +7,9 @@
   min-height: 100vh;
 
   &__container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 80vh;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -32,4 +35,8 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.532);
   }
+}
+
+body:has(.base-popup_active) {
+  overflow: hidden;
 }

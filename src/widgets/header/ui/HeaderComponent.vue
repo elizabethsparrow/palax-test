@@ -6,6 +6,7 @@ import { CreatePostComponent, CreateUserComponent } from '../index'
   <header class="header-component">
     <div class="header-component__container">
       <create-post-component class="header-component__create-post-component" />
+      <create-user-component class="header-component__create-user-component" />
     </div>
   </header>
 </template>
@@ -18,6 +19,7 @@ import { CreatePostComponent, CreateUserComponent } from '../index'
   &__container {
     display: flex;
     justify-content: flex-end;
+    gap: 12px;
   }
 }
 </style>

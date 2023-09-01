@@ -7,7 +7,7 @@ import { ref } from 'vue'
 
 const refEditPostPopup = ref(),
   refConfirmPopup = ref(),
-  refCreateButton = ref({})
+  refCreateButton = ref()
 
 const { createNewPost } = usePostStore()
 
@@ -17,7 +17,7 @@ const onClickActivateButton = () => {
 
 const onClickCreateButton = async () => {
   try {
-    refCreateButton.value?.setLoadingStatus(true)
+    refCreateButton.value.setLoadingStatus(true)
     const formData = refEditPostPopup.value.getFormData()
     if (formData) {
       await createNewPost(formData)
@@ -25,10 +25,10 @@ const onClickCreateButton = async () => {
       refConfirmPopup.value.open('Success!', 'Post created successfully!')
       return
     }
-  } catch (error) {
+  } catch (error: any) {
     refConfirmPopup.value.open('Error!', error.message)
   } finally {
-    refCreateButton.value?.setLoadingStatus(false)
+    refCreateButton.value.setLoadingStatus(false)
   }
 }
 </script>

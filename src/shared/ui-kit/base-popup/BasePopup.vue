@@ -35,7 +35,7 @@ defineExpose({ open, confirm, close })
 </script>
 
 <template>
-  <div class="base-popup" v-if="isOpen">
+  <div class="base-popup" :class="{ 'base-popup_active': isOpen }" v-if="isOpen">
     <div class="base-popup__container">
       <div class="base-popup__card">
         <slot />
@@ -45,6 +45,6 @@ defineExpose({ open, confirm, close })
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import './styles.module.scss';
 </style>

@@ -1,0 +1,25 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__input-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    padding: 8px;
+  }
+
+  &__input-label {
+    margin-bottom: 4px;
+
+    &_required {
+      &::after {
+        content: '*';
+        color: $red;
+      }
+    }
+  }
+}

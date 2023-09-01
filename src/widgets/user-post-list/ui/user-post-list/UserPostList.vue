@@ -52,12 +52,12 @@ const onClickSaveButton = async () => {
 const onClickDeleteButton = async (postId: Number, buttonRef?: any) => {
   try {
     console.log(buttonRef)
-    buttonRef.setLoadingStatus(true)
+    buttonRef[0]?.setLoadingStatus(true)
     await deletePost(postId)
   } catch (error: any) {
     activateConfirm('Error!', error.message)
   } finally {
-    buttonRef.setLoadingStatus(false)
+    buttonRef[0]?.setLoadingStatus(false)
   }
 }
 
@@ -84,7 +84,7 @@ onLoad()
     <div class="user-post-list__container">
       <user-post-card
         class="user-post-list__user-post-card"
-        v-for="(user, i) in users"
+        v-for="user in users"
         :key="user.id.toString()"
         :user="user"
       >
@@ -100,7 +100,7 @@ onLoad()
             :ref="`refDeleteButton${post.id}`"
             :button-style="EnumButtonStyles.primary"
             :button-size="EnumButtonSizes.small"
-            @click="onClickDeleteButton(post.id, $refs[`refDeleteButton${post.id}`][0])"
+            @click="onClickDeleteButton(post.id, $refs[`refDeleteButton${post.id}`])"
           >
             Delete
           </base-button>

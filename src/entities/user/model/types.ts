@@ -1,5 +1,3 @@
-import type { IPost } from '@/entities/post'
-
 export interface IUser {
   id: Number
   name?: String | null
@@ -13,7 +11,7 @@ export interface IUser {
       lat?: String | null
       lng?: String | null
     }
-  }
+  } | null
   email?: String | null
   phone?: String | null
   website?: String | null
@@ -21,7 +19,8 @@ export interface IUser {
     name?: String | null
     catchPhrase?: String | null
     bs?: String | null
-  }
+  } | null
+  [key: string]: any
 }
 
 export interface IUserCreate extends Omit<IUser, 'id'> {}

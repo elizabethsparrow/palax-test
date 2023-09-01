@@ -1,0 +1,17 @@
+.edit-user-popup {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__buttons-block {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}
