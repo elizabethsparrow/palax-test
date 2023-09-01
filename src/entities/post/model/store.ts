@@ -14,6 +14,7 @@ export const usePostStore = defineStore('postStore', () => {
   const posts = ref<IPost[]>([])
 
   const getPostsByUser = async (userId: Number) => {
+    setPostStoreToLocalStorage()
     if (getPostsByUserId(userId).length > 0) {
       return
     }
@@ -72,14 +73,17 @@ export const usePostStore = defineStore('postStore', () => {
     posts.value = [...posts.value].filter((post) => post.id != postId)
   }
 
+  const setPostStoreToLocalStorage = () => {
+    const localStoragePosts = localStorage.posts ? JSON.parse(localStorage.posts) : null
+    if (posts.value.length <= 0 && localStoragePosts) setPostsToState(localStoragePosts)
+  }
+
   watch(
     () => posts.value,
     () => {
       localStorage.posts = JSON.stringify(posts.value)
-      const localStoragePosts = localStorage.posts ? JSON.parse(localStorage.posts) : null
-      if (posts.value.length <= 0 && localStoragePosts) setPostsToState(localStoragePosts)
     },
-    { immediate: true, deep: true }
+    { deep: true }
   )
 
   return {

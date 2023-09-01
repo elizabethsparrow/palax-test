@@ -31,7 +31,7 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   const setUsers = (newUsers: IUser[]) => {
-    if (users.value.length <= 0) newUsers.forEach((user) => setUser({ ...user, posts: [] }))
+    newUsers.forEach((user) => setUser(user))
   }
 
   const getUserById = (userId: Number): IUser | null | undefined => {
@@ -39,10 +39,15 @@ export const useUserStore = defineStore('userStore', () => {
     return user
   }
 
-  const getAllUsers = async () => {
-    const response = await requestGetAllUsers()
-    console.log(response)
-    setUsers(response)
+  const getAllUsers = async (): Promise<void> => {
+    setUsersFromLocalStorage()
+    console.log(users.value.length)
+
+    if (users.value.length <= 0) {
+      const response = await requestGetAllUsers()
+      console.log(response)
+      setUsers(response)
+    }
   }
 
   const createUser = async (userData: IUserCreate): Promise<void> => {
@@ -61,14 +66,19 @@ export const useUserStore = defineStore('userStore', () => {
     removeUserFromStore(userId)
   }
 
+  const setUsersFromLocalStorage = () => {
+    const localStorageUsers = localStorage.users ? JSON.parse(localStorage.users) : null
+    if (users.value.length <= 0 && localStorageUsers) setUsers(localStorageUsers)
+    console.log(localStorage.users)
+    console.log(users.value)
+  }
+
   watch(
     () => users.value,
     () => {
       localStorage.users = JSON.stringify(users.value)
-      const localStorageUsers = localStorage.users ? JSON.parse(localStorage.users) : null
-      if (users.value.length <= 0 && localStorageUsers) setUsers(localStorageUsers)
     },
-    { immediate: true, deep: true }
+    { deep: true }
   )
 
   return { users, getAllUsers, getUserById, createUser, updateUser, editUser, deleteUser }
