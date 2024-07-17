@@ -10,6 +10,8 @@
 
 Все данные сохраняются в localStorage, так что при перезагрузке сохраняются новые пользователя и изменения в уже существующих пользователях и постах.
 
+
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
@@ -54,3 +56,4 @@ npm run build
 ```sh
 npm run lint
 ```
+git subtree push --prefix dist origin gh-pages
