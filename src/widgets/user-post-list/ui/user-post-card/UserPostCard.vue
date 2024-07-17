@@ -7,27 +7,31 @@ import { EditUserPopup } from '@/features/edit-user-popup'
 import { ConfirmPopup } from '@/features/confirm-popup'
 
 const props = defineProps<{
-    user: IUser
-  }>(),
+  user: IUser
+}>(),
   { user } = toRefs(props)
 
 const { getPostsByUser, getPostsByUserId } = usePostStore(),
   { editUser, deleteUser } = useUserStore(),
   showPosts = ref<Boolean>(false),
+  isPostsLoading = ref<Boolean>(false),
   posts = computed(() => getPostsByUserId(user.value.id)),
   refEditUserPopup = ref(),
   refSaveButton = ref(),
   refConfirmPopup = ref()
 
-const onClickUserCard = (userId: Number) => {
-  if (!showPosts.value) getPostsByUser(userId)
-  showPosts.value = !showPosts.value
+const onClickUserCard = async (userId: Number) => {
+  try {
+    isPostsLoading.value = true
+    if (!showPosts.value) await getPostsByUser(userId)
+    showPosts.value = !showPosts.value
+  } finally {
+    isPostsLoading.value = false
+  }
 }
 
 const onClickDeleteButton = async (userId: Number, refButton: any) => {
   try {
-    console.log(refButton)
-
     refButton?.setLoadingStatus(true)
     await deleteUser(userId)
   } catch (error: any) {
@@ -51,12 +55,8 @@ watch(
 <template>
   <div class="user-post-card">
     <confirm-popup ref="refConfirmPopup"> </confirm-popup>
-    <user-card
-      class="user-post-card__user-card"
-      :key="user.id.toString()"
-      :user="user"
-      @click="onClickUserCard(user.id)"
-    >
+    <user-card class="user-post-card__user-card" :key="user.id.toString()" :user="user"
+      @click="onClickUserCard(user.id)">
       <template #buttons-block>
         <slot name="user-buttons-block" />
       </template>
@@ -69,6 +69,7 @@ watch(
       </post-card>
       <p v-if="posts.length <= 0">Posts not found</p>
     </div>
+    <p v-if="isPostsLoading">Loading ...</p>
   </div>
 </template>
 
@@ -83,6 +84,7 @@ watch(
     width: 30%;
     height: fit-content;
   }
+
   &__post-container {
     width: 70%;
     display: flex;

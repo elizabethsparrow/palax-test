@@ -36,8 +36,6 @@ const onClickPostSaveButton = async () => {
     refSaveButton?.value?.setLoadingStatus(true)
     const result: IPost = refEditPostPopup.value.getFormData()
     if (result) {
-      console.log(result)
-
       await editPost(result)
       refEditPostPopup.value.confirm()
       activateConfirm('Success!', 'Post successfully edited')

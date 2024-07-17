@@ -1,4 +1,3 @@
-import { useUserStore } from '@/entities/user'
 import { defineStore } from 'pinia'
 import { ref, toRefs, watch } from 'vue'
 import {
@@ -31,13 +30,14 @@ export const usePostStore = defineStore('postStore', () => {
 
   const setPostsToState = (newPosts: IPost[]): void => {
     newPosts.forEach((post) => {
-      let isPostExist = getIsPostExist(post.id)
+      const isPostExist = getIsPostExist(post.id)
       if (!isPostExist) posts.value.push(post)
     })
   }
+  
   const updatePost = (postData: IPost) => {
-    let post: IPost | null | undefined = getPostById(postData.id)
-    let postObjectKeys = Object.getOwnPropertyNames(post)
+    const post: IPost | null | undefined = getPostById(postData.id)
+    const postObjectKeys = Object.getOwnPropertyNames(post)
     postObjectKeys.forEach((key) => {
       if (post) post[key] = postData[key]
     })
@@ -53,12 +53,8 @@ export const usePostStore = defineStore('postStore', () => {
   }
 
   const editPost = async (postData: IPost): Promise<void> => {
-    try {
-      const result = await requestEditPost(postData)
-      if (result) updatePost(result)
-    } catch (error) {
-      throw error
-    }
+    const result = await requestEditPost(postData)
+    if (result) updatePost(result)
   }
 
   const getPostsByUserId = (userId: Number) => {
