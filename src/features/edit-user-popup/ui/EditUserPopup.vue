@@ -14,6 +14,8 @@ const open = (newUserData?: IUser) => {
 }
 
 const getFormData = (): IUser => {
+  let formData = refUserForm.value?.getFormData()
+  if (!formData) return
   return { ...refUserForm.value?.getFormData(), id: userData.value?.id }
 }
 

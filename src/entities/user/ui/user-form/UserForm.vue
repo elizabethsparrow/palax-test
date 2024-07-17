@@ -29,7 +29,7 @@ const v$ = useVuelidate<IUserCreate>(validateRules, formData)
 const setFormData = () => {
   const postDataObjectKeys: string[] = Object.getOwnPropertyNames(formData)
   postDataObjectKeys.forEach((key) => {
-    if (userData && userData.value) {
+    if (userData.value && userData.value) {
       formData[key] = userData.value[key]
     }
   })
